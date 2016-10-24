@@ -38,9 +38,9 @@ def forward(observations, transitions, sequence_len, batch=False):
     """
     step = make_forward_step(transitions, batch)
     if not batch:
-        first, rest = observations[0], observations[1:]
+        first, rest = observations[0, :], observations[1:, :]
     else:
-        first, rest = observations[:, 0], observations[:, 1:]
+        first, rest = observations[:, 0, :], observations[:, 1:, :]
     sequence_len -= 1    # exclude first
     outputs, _ = scan(step, rest, first, n_steps=sequence_len, batch=batch)
 
